@@ -20,6 +20,7 @@ def convert():
     except KeyError as e:
         return jsonify(error=f"JSON body must contain {e} key")
 
+    file_name = data.get('file_name', 'document.pdf')
     filters = data.get('filters', [])
     extra_args = data.get('extra_args', [])
 
@@ -29,7 +30,9 @@ def convert():
                               outputfile=f.name,
                               filters=filters,
                               extra_args=extra_args)
-        return send_file(f.name)
+        return send_file(f.name, 
+                         as_attachment=True, 
+                         attachment_filename=file_name)
 
 
 if __name__ == '__main__':
