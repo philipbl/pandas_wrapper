@@ -1,12 +1,23 @@
 import tempfile
 
 from flask import Flask, request, jsonify, send_file
+from flask_basicauth import BasicAuth
 import pypandoc
+import yaml
 
+
+with open('config.yaml') as f:
+    config = yaml.load(f)
 
 app = Flask(__name__)
 
+app.config['BASIC_AUTH_USERNAME'] = config['username']
+app.config['BASIC_AUTH_PASSWORD'] = config['password']
+
+basic_auth = BasicAuth(app)
+
 @app.route("/convert/json", methods=['POST'])
+@basic_auth.required
 def convert():
     data = request.get_json()
 
