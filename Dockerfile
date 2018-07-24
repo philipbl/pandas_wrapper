@@ -9,3 +9,7 @@ COPY Pipfile.lock /app
 RUN pipenv install --deploy --system
 
 COPY . /app
+
+EXPOSE 8000
+
+CMD ["gunicorn", "-b", ":8000", "app:app"]
