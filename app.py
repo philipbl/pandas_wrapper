@@ -16,7 +16,7 @@ app.config['BASIC_AUTH_PASSWORD'] = config['password']
 
 basic_auth = BasicAuth(app)
 
-@app.route("/convert/json", methods=['POST'])
+@app.route("/json", methods=['POST'])
 @basic_auth.required
 def convert():
     data = request.get_json()
